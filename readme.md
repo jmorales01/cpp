@@ -17,3 +17,5 @@
 `$ gcc -o calculadora lex.yy.c parser.tab.c -lm`
 #### Execute
 `$ ./calculadora`                                                   <!-- calculadora is name the generate excecutable -->
+
+![Captura de pantalla 2024-05-24 232133](https://github.com/jmorales01/cpp/assets/91076395/f3d1a2f2-e71a-447b-97d6-831fd4d536c3)
