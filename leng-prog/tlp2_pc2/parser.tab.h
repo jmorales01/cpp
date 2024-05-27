@@ -40,7 +40,11 @@
       know about them.  */
    enum yytokentype {
      NUMBER = 258,
-     EOL = 259
+     EOL = 259,
+     SIN = 260,
+     COS = 261,
+     TAN = 262,
+     UMINUS = 263
    };
 #endif
 
@@ -51,14 +55,14 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 11 "parser.y"
+#line 10 "parser.y"
 
     double num;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 62 "parser.tab.h"
+#line 66 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

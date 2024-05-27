@@ -1,11 +1,10 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-
-int yylex(void);
+#include <math.h>
 
 void yyerror(const char *s);
-
+int yylex(void);
 %}
 
 %union {
@@ -14,10 +13,12 @@ void yyerror(const char *s);
 
 %token <num> NUMBER
 %token EOL
+%token SIN COS TAN
 %type <num> expr line
 
 %left '+' '-'
 %left '*' '/'
+%left UMINUS
 
 %%
 
@@ -32,22 +33,25 @@ line:
     ;
 
 expr:
-    NUMBER             { $$ = $1; }
-    | expr '+' expr    { $$ = $1 + $3; }
-    | expr '-' expr    { $$ = $1 - $3; }
-    | expr '*' expr    { $$ = $1 * $3; }
-    | expr '/' expr    { $$ = $1 / $3; }
-    | '(' expr ')'     { $$ = $2; }
+    NUMBER                     { $$ = $1; }
+    | expr '+' expr            { $$ = $1 + $3; }
+    | expr '-' expr            { $$ = $1 - $3; }
+    | expr '*' expr            { $$ = $1 * $3; }
+    | expr '/' expr            { $$ = $1 / $3; }
+    | '-' expr %prec UMINUS    { $$ = -$2; }
+    | '(' expr ')'             { $$ = $2; }
+    | SIN '(' expr ')'         { $$ = sin($3); }
+    | COS '(' expr ')'         { $$ = cos($3); }
+    | TAN '(' expr ')'         { $$ = tan($3); }
     ;
 
 %%
 
-int main() {
-    printf("Ingrese una operacion:\n");
-    yyparse();
-    return 0;
+void yyerror(const char *s) {
+    fprintf(stderr, "Error: %s\n", s);
 }
 
-void yyerror(const char *s) {
-    fprintf(stderr, "Error: en la operacion ingresada %s\n", s);
+int main(void) {
+    printf("Ingrese una operacion:\n");
+    return yyparse();
 }
